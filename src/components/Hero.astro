@@ -1,0 +1,214 @@
+---
+import { Image } from "astro:assets";
+import HeroBlobs from "./HeroBlobs.astro";
+import nikolaImg  from "../assets/nikola.jpg";
+import nikola2Img from "../assets/nikola2.jpeg";
+---
+
+<!--
+  NOTE: No overflow-hidden on this section.
+  Blobs are clipped by their own container inside HeroBlobs.
+  Removing it here prevents the gradient-text last glyph from being cut off.
+-->
+<section
+  id="hero"
+  class="relative min-h-screen flex flex-col items-center justify-center"
+  style="background: var(--color-bg);"
+>
+  <HeroBlobs />
+
+  <!-- Dot grid -->
+  <div class="hero-dotgrid absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+
+  <!-- Bottom fade -->
+  <div class="hero-fade absolute bottom-0 left-0 right-0 h-40 pointer-events-none" aria-hidden="true"></div>
+
+  <!-- ── Photo cards (xl+ only, subtle) ─────────────────── -->
+  <div class="photo-card photo-left" aria-hidden="true">
+    <Image src={nikolaImg}  alt="" width={240} height={315} densities={[1, 2, 3]} loading="eager" decoding="async" />
+  </div>
+  <div class="photo-card photo-right" aria-hidden="true">
+    <Image src={nikola2Img} alt="" width={240} height={315} densities={[1, 2, 3]} loading="eager" decoding="async" />
+  </div>
+
+  <!-- ── Main content ───────────────────────────────────── -->
+  <div class="relative z-10 w-full text-center px-6 max-w-5xl mx-auto">
+
+    <!-- Eyebrow -->
+    <p class="hero-item section-label mb-6 inline-flex items-center gap-3" style="animation-delay: 0.2s;">
+      <span class="inline-block h-px w-8" style="background: var(--color-primary);"></span>
+      Making computers do useful things
+      <span class="inline-block h-px w-8" style="background: var(--color-primary);"></span>
+    </p>
+
+    <!-- Name — extra padding-right so last glyph never clips -->
+    <h1
+      class="hero-item font-black leading-[0.9] tracking-tighter mb-5"
+      style="font-size: clamp(3.5rem, 12vw, 8rem); color: var(--color-text); animation-delay: 0.32s; padding: 0 0.08em 0.05em;"
+    >
+      Nikola <span class="gradient-text">Zjacic</span>
+    </h1>
+
+    <!-- Title -->
+    <p
+      class="hero-item font-light tracking-widest mb-6"
+      style="font-size: clamp(1rem, 2.5vw, 1.35rem); color: var(--color-text-muted); animation-delay: 0.44s;"
+    >
+      Software Engineer
+    </p>
+
+    <!-- Tagline -->
+    <p
+      class="hero-item max-w-lg mx-auto text-base leading-relaxed mb-12"
+      style="color: var(--color-text-muted); animation-delay: 0.56s;"
+    >
+      Fueled by clean code, fresh sneakers, and chasing goals, on and off the pitch.
+      Based in <span style="color: var(--color-text);">Italy</span>
+    </p>
+
+    <!-- CTAs — equal-width buttons so the gap lands on page center -->
+    <div class="hero-item flex items-center gap-4 w-full max-w-sm mx-auto" style="animation-delay: 0.68s;">
+      <a href="#projects" class="cta-primary flex-1 inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-full font-semibold text-sm">
+        View Projects
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#contact" class="cta-secondary flex-1 inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-full font-semibold text-sm">
+        Get in Touch
+      </a>
+    </div>
+  </div>
+
+  <!-- ── Bottom bar: social + scroll, anchored to viewport bottom ── -->
+  <div class="absolute bottom-10 left-0 right-0 z-10 flex flex-col items-center gap-5">
+
+    <!-- Social row -->
+    <div class="hero-item flex items-center w-full max-w-sm px-6" style="animation-delay: 0.8s;">
+      <a href="https://linkedin.com/in/nikola-zjacic/" target="_blank" rel="noopener noreferrer" class="hero-social flex-1 text-right pr-4">
+        LinkedIn
+      </a>
+      <span class="w-px h-3 flex-shrink-0" style="background: var(--color-border-hover);"></span>
+      <a href="mailto:zjacicnikola.work@gmail.com" class="hero-social flex-1 text-left pl-4">
+        Email
+      </a>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="scroll-cue flex flex-col items-center gap-2" aria-hidden="true">
+      <span class="text-xs tracking-widest uppercase" style="color: var(--color-text-muted);">See More</span>
+      <div class="scroll-line w-px h-8" style="background: var(--color-primary);"></div>
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+  .hero-dotgrid {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .hero-fade {
+    background: linear-gradient(to bottom, transparent, var(--color-bg));
+  }
+
+  /* ── Photo cards ────────────────────────────────────── */
+  .photo-card {
+    display: none;
+  }
+
+  @media (min-width: 1280px) {
+    .photo-card {
+      display: block;
+      position: absolute;
+      z-index: 5;
+      opacity: 0.45;
+      transition: opacity 0.35s ease;
+      animation: hero-reveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: 0.9s;
+    }
+    .photo-card:hover { opacity: 0.7; }
+
+    /* Left: slight counter-clockwise tilt */
+    .photo-left {
+      left: calc(50% - 532px);
+      top: 26%;
+      transform: rotate(-4deg);
+    }
+    /* Right: positioned so its top half overlaps the Zjacic title */
+    .photo-right {
+      right: calc(50% - 532px);
+      top: 14%;
+      transform: rotate(3deg);
+    }
+
+    .photo-card img {
+      display: block;
+      width: 240px;
+      height: 315px;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  /* ── CTAs ───────────────────────────────────────────── */
+  .cta-primary {
+    background: var(--color-primary);
+    color: #fff;
+    box-shadow: 0 0 24px rgba(249, 115, 22, 0.38);
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  }
+  .cta-primary:hover {
+    background: var(--color-primary-light);
+    box-shadow: 0 0 38px rgba(249, 115, 22, 0.55);
+    transform: translateY(-1px);
+  }
+
+  .cta-secondary {
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid rgba(249, 115, 22, 0.32);
+    transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+  }
+  .cta-secondary:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: rgba(249, 115, 22, 0.05);
+  }
+
+  .hero-social {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    transition: color 0.2s ease;
+  }
+  .hero-social:hover { color: var(--color-primary); }
+
+  /* ── Scroll cue ─────────────────────────────────────── */
+  .scroll-cue {
+    opacity: 0;
+    animation: fade-in 0.7s ease forwards 1.2s;
+  }
+  @keyframes fade-in { to { opacity: 1; } }
+
+  .scroll-line {
+    transform-origin: top;
+    animation: scroll-pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes scroll-pulse {
+    0%, 100% { transform: scaleY(0.15); opacity: 0.3; }
+    50%       { transform: scaleY(1);    opacity: 1;   }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-cue  { animation: none; opacity: 1; }
+    .scroll-line { animation: none; }
+    .photo-card  { animation: none; opacity: 0.42; }
+  }
+</style>

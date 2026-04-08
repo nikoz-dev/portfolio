@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+@theme {
+  /* =============================================
+     PALETTE — swap these vars to change theme
+     ============================================= */
+  --color-primary:       #f97316;
+  --color-primary-light: #fb923c;
+  --color-primary-dark:  #ea580c;
+  --color-bg:            #0a0a0a;
+  --color-surface:       #141414;
+  --color-surface-2:     #1c1c1c;
+  --color-text:          #fafafa;
+  --color-text-muted:    #a3a3a3;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+:root {
+  --color-border:       rgba(249, 115, 22, 0.18);
+  --color-border-hover: rgba(249, 115, 22, 0.5);
+  --color-glow:         rgba(249, 115, 22, 0.12);
+}
+
+/* ── Base ─────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar              { width: 5px; }
+::-webkit-scrollbar-track        { background: var(--color-bg); }
+::-webkit-scrollbar-thumb        { background: var(--color-primary-dark); border-radius: 3px; }
+
+::selection { background: rgba(249, 115, 22, 0.28); color: var(--color-text); }
+
+/* ── Scroll reveal ────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity  0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible           { opacity: 1; transform: none; }
+.reveal[data-delay="1"]      { transition-delay: 0.1s; }
+.reveal[data-delay="2"]      { transition-delay: 0.2s; }
+.reveal[data-delay="3"]      { transition-delay: 0.3s; }
+.reveal[data-delay="4"]      { transition-delay: 0.4s; }
+
+/* ── Hero entrance ────────────────────────── */
+.hero-item {
+  opacity: 0;
+  animation: hero-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes hero-reveal {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Glass card ───────────────────────────── */
+.glass {
+  /* No backdrop-filter — zero compositor cost during scroll */
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.glass:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: 0 0 28px var(--color-glow), 0 8px 28px rgba(0, 0, 0, 0.35);
+}
+
+/* ── Utilities ────────────────────────────── */
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary), var(--color-primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.22rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  background: rgba(249, 115, 22, 0.1);
+  border: 1px solid rgba(249, 115, 22, 0.22);
+  color: var(--color-primary-light);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.tag:hover {
+  background: rgba(249, 115, 22, 0.18);
+  border-color: rgba(249, 115, 22, 0.45);
+}
+
+.timeline-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--color-primary) 15%, var(--color-primary) 85%, transparent);
+}
+
+/* ── Reduced motion ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal          { transition: none; opacity: 1; transform: none; }
+  .hero-item       { animation: none; opacity: 1; }
+}

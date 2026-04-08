@@ -1,0 +1,157 @@
+---
+const links = [
+  {
+    label: "Email",
+    value: "zjacicnikola.work@gmail.com",
+    href: "mailto:zjacicnikola.work@gmail.com",
+    download: false,
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="4" width="20" height="16" rx="2"/>
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+    </svg>`,
+  },
+  {
+    label: "LinkedIn",
+    value: "Nikola Zjacic",
+    href: "https://linkedin.com/in/nikola-zjacic/",
+    download: false,
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+    </svg>`,
+  },
+  {
+    label: "Instagram",
+    value: "@nikolazjacic",
+    href: "https://instagram.com/nikolazjacic",
+    download: false,
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <circle cx="12" cy="12" r="4"/>
+      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+    </svg>`,
+  },
+  {
+    label: "Resume",
+    value: "Download the resume",
+    href: "/Zjacic_Nikola_Resume.pdf",
+    download: true,
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="12" y1="18" x2="12" y2="12"/>
+      <polyline points="9 15 12 18 15 15"/>
+    </svg>`,
+  },
+];
+---
+
+<section
+  id="contact"
+  class="relative py-24 px-6"
+  style="background: var(--color-bg);"
+>
+  <div class="max-w-6xl mx-auto">
+    <div class="max-w-2xl">
+      <p class="section-label mb-4">Contact</p>
+      <h2
+        class="text-4xl md:text-5xl font-black tracking-tight mb-6 leading-tight"
+        style="color: var(--color-text);"
+      >
+        Let's build something
+        <span class="gradient-text"> great</span>.
+      </h2>
+      <p
+        class="text-base leading-relaxed mb-12"
+        style="color: var(--color-text-muted);"
+      >
+        I'm always open to discussing new projects, interesting opportunities,
+        or just having a chat. Don't hesitate to reach out.
+      </p>
+
+      <!-- Contact links -->
+      <div class="space-y-4">
+        {links.map(({ label, value, href, download, icon }) => (
+          <a
+            href={href}
+            download={download || undefined}
+            target={!download && href.startsWith("http") ? "_blank" : undefined}
+            rel={!download && href.startsWith("http") ? "noopener noreferrer" : undefined}
+            class="contact-link glass flex items-center gap-5 p-5 group transition-all duration-300"
+          >
+            <span
+              class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300"
+              style="background: rgba(249,115,22,0.1); color: var(--color-primary);"
+              set:html={icon}
+            />
+            <div>
+              <p
+                class="text-xs font-semibold uppercase tracking-widest mb-0.5"
+                style="color: var(--color-primary);"
+              >
+                {label}
+              </p>
+              <p
+                class="text-sm font-medium"
+                style="color: var(--color-text);"
+              >
+                {value}
+              </p>
+            </div>
+            {download ? (
+              <!-- Download arrow: points down, hover shifts down -->
+              <svg
+                class="ml-auto transition-transform duration-300 group-hover:translate-y-1"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                style="color: var(--color-text-muted);"
+                aria-hidden="true"
+              >
+                <path
+                  d="M8 2v8M5 7l3 3 3-3M2 13h12"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            ) : (
+              <!-- Right arrow: hover shifts right -->
+              <svg
+                class="ml-auto transition-transform duration-300 group-hover:translate-x-1"
+                width="16"
+                height="16"
+                viewBox="0 0 14 14"
+                fill="none"
+                style="color: var(--color-text-muted);"
+                aria-hidden="true"
+              >
+                <path
+                  d="M1 7h12M8 2l5 5-5 5"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="max-w-6xl mx-auto mt-24 pt-8" style="border-top: 1px solid var(--color-border);">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-sm" style="color: var(--color-text-muted);">
+        © 2026 Nikola Zjacic. Built with
+        <span style="color: var(--color-primary);">Astro</span>.
+      </p>
+      <p class="text-xs font-mono" style="color: var(--color-text-muted);">
+        Cervignano del Friuli, Italy
+      </p>
+    </div>
+  </div>
+</section>
